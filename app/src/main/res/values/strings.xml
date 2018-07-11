@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">AndroidMensajitos</string>
+    <string name="app_name">Mensajitos Android</string>
+    <string name="title_activity_menu">Menú</string>
+    <string name="navigation_drawer_open">Abrir menú</string>
+    <string name="navigation_drawer_close">Cerrar menú</string>
+    <string name="nav_header_title">Mensajitos</string>
+    <string name="nav_header_subtitle">UNITEC</string>
+    <string name="nav_header_desc">Opciones</string>
+    <string name="action_settings">Ajustes</string>
 </resources>

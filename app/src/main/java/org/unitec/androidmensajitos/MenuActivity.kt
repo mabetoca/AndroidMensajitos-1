@@ -64,30 +64,30 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_camera -> {
+            R.id.nav_principal -> {
 
                 ocultarTodo()
                 val principal = findViewById(R.id.contenido_principal) as ConstraintLayout
                 principal.visibility = View.VISIBLE
 
             }
-            R.id.nav_gallery -> {
+            R.id.nav_guardar -> {
 
                 ocultarTodo()
                 val principal = findViewById(R.id.guardar_mensaje) as ConstraintLayout
                 principal.visibility = View.VISIBLE
 
             }
-            R.id.nav_slideshow -> {
+            R.id.nav_buscartodos -> {
 
             }
-            R.id.nav_manage -> {
+            R.id.nav_buscarporid -> {
 
             }
-            R.id.nav_share -> {
+            R.id.nav_actualizar -> {
 
             }
-            R.id.nav_send -> {
+            R.id.nav_borrar -> {
 
             }
         }

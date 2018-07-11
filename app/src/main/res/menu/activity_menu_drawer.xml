@@ -5,34 +5,31 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/nav_principal"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Inicio" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_guardar"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="Guardar" />
+        <item
+            android:id="@+id/nav_buscartodos"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Buscar Todos" />
+        <item
+            android:id="@+id/nav_buscarporid"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Buscar por id" />
+        <item
+            android:id="@+id/nav_actualizar"
+            android:icon="@drawable/ic_menu_share"
+            android:title="Actualizar" />
+        <item
+            android:id="@+id/nav_borrar"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Borrar" />
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
+
 
 </menu>

@@ -1,5 +1,7 @@
 package org.unitec.androidmensajitos
 
+import android.content.Intent
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.Snackbar
@@ -10,12 +12,19 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import android.widget.Toast
+import com.fasterxml.jackson.databind.ObjectMapper
 import kotlinx.android.synthetic.main.activity_menu.*
 import kotlinx.android.synthetic.main.app_bar_menu.*
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+import org.springframework.web.client.RestTemplate
 
 class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    var estatus = Estatus()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +44,13 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         ocultarTodo()
         val principal = findViewById(R.id.contenido_principal) as ConstraintLayout
         principal.visibility = View.VISIBLE
+
+
+        //Para guardar
+       var botonGuardar=findViewById<Button>(R.id.botonGuardar).setOnClickListener{
+           TareaMensaje().execute(null, null, null)
+
+        }
     }
 
     override fun onBackPressed() {
@@ -104,5 +120,41 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         principal.visibility = View.INVISIBLE
         mensajes.visibility = View.INVISIBLE
 
+    }
+
+    inner class TareaMensaje : AsyncTask<Void, Void, Void>() {
+
+        override fun doInBackground(vararg p0: Void?): Void? {
+
+        var mensa=Mensaje()
+            mensa.titulo="desde android"
+            mensa.cuerpo="Este es el cuerpo desde la app en android"
+
+            var url2="https://jc-unitec.herokuapp.com/api/mensajito"
+
+            val restTemplate = RestTemplate()
+            restTemplate.messageConverters.add(MappingJackson2HttpMessageConverter())
+
+
+            val maper = ObjectMapper()
+            //  usuarios = maper.readValue(estring, object : TypeReference<ArrayList<Usuario>>() {})
+
+            val respuesta = restTemplate.postForObject(url2, mensa, String::class.java)
+            estatus = maper.readValue(respuesta,Estatus::class.java )
+            print(estatus.mensaje)
+
+            println("DESPUES DE REST");
+            return null
+        }
+
+        override fun onPreExecute() {
+            super.onPreExecute()
+        }
+
+        override fun onPostExecute(result: Void?) {
+            super.onPostExecute(result)
+            Toast.makeText(applicationContext,estatus.mensaje, Toast.LENGTH_LONG).show();
+
+        }
     }
 }

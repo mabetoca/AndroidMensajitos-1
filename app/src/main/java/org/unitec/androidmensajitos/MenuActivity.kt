@@ -12,10 +12,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.Toast
+import android.widget.*
 import com.fasterxml.jackson.databind.ObjectMapper
 import kotlinx.android.synthetic.main.activity_menu.*
 import kotlinx.android.synthetic.main.app_bar_menu.*
@@ -25,6 +22,7 @@ import org.springframework.web.client.RestTemplate
 class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var estatus = Estatus()
+    var mensaje=Mensaje()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +47,8 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //Para guardar
        var botonGuardar=findViewById<Button>(R.id.botonGuardar).setOnClickListener{
            TareaMensaje().execute(null, null, null)
+
+           Toast.makeText(applicationContext,"Mensaje guardardo", Toast.LENGTH_LONG).show()
 
         }
     }
@@ -126,11 +126,10 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         override fun doInBackground(vararg p0: Void?): Void? {
 
-        var mensa=Mensaje()
-            mensa.titulo="desde android"
-            mensa.cuerpo="Este es el cuerpo desde la app en android"
 
-            var url2="https://jc-unitec.herokuapp.com/api/mensajito"
+
+
+            var url2="https://jc-elementos.herokuapp.com/api/mensaje"
 
             val restTemplate = RestTemplate()
             restTemplate.messageConverters.add(MappingJackson2HttpMessageConverter())
@@ -139,7 +138,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val maper = ObjectMapper()
             //  usuarios = maper.readValue(estring, object : TypeReference<ArrayList<Usuario>>() {})
 
-            val respuesta = restTemplate.postForObject(url2, mensa, String::class.java)
+            val respuesta = restTemplate.postForObject(url2, mensaje, String::class.java)
             estatus = maper.readValue(respuesta,Estatus::class.java )
             print(estatus.mensaje)
 
@@ -149,12 +148,15 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         override fun onPreExecute() {
             super.onPreExecute()
+            //Se piden las componentes
+        var eCuerpo=     findViewById<EditText>(R.id.textoCuerpo)
+        mensaje.cuerpo=    eCuerpo.text.toString();
         }
 
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
             Toast.makeText(applicationContext,estatus.mensaje, Toast.LENGTH_LONG).show();
-
+           findViewById<EditText>(R.id.textoCuerpo).text=null
         }
     }
 }

@@ -13,6 +13,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
+import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import kotlinx.android.synthetic.main.activity_menu.*
 import kotlinx.android.synthetic.main.app_bar_menu.*
@@ -23,6 +24,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     var estatus = Estatus()
     var mensaje=Mensaje()
+    var mensajes=ArrayList<Mensaje>();
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -157,6 +159,35 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             super.onPostExecute(result)
             Toast.makeText(applicationContext,estatus.mensaje, Toast.LENGTH_LONG).show();
            findViewById<EditText>(R.id.textoCuerpo).text=null
+        }
+    }
+
+    inner class BuscarMensajes:AsyncTask<Void, Void, Void>(){
+
+        override fun onPostExecute(result: Void?) {
+            super.onPostExecute(result)
+        }
+
+        override fun doInBackground(vararg p0: Void?): Void? {
+
+            var url2="https://jc-elementos.herokuapp.com/api/mensaje"
+
+            val restTemplate = RestTemplate()
+            restTemplate.messageConverters.add(MappingJackson2HttpMessageConverter())
+
+            val maper = ObjectMapper()
+            val respuesta = restTemplate.getForObject(url2,  String::class.java)
+            mensajes = maper.readValue(respuesta, object : TypeReference<ArrayList<Mensaje>>(){})
+
+
+            println("DESPUES DE REST");
+            return null
+        }
+
+
+        override fun onPreExecute() {
+            super.onPreExecute()
+            //NO enviamos nada en el caso de buscar todos
         }
     }
 }

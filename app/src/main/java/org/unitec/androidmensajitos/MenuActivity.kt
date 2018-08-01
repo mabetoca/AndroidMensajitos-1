@@ -53,6 +53,11 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
            Toast.makeText(applicationContext,"Mensaje guardardo", Toast.LENGTH_LONG).show()
 
         }
+
+        //Para buscar todos
+          findViewById<Button>(R.id.buscarTodos).setOnClickListener{
+              BuscarMensajes().execute(null,null,null);
+          }
     }
 
     override fun onBackPressed() {
@@ -97,7 +102,9 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
             R.id.nav_buscartodos -> {
-
+                    ocultarTodo()
+                val buscarTodos=findViewById<ConstraintLayout>(R.id.buscar_todos);
+                buscarTodos.visibility=View.VISIBLE
             }
             R.id.nav_buscarporid -> {
 
@@ -119,8 +126,10 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val principal = findViewById(R.id.contenido_principal) as ConstraintLayout
         val mensajes = findViewById(R.id.guardar_mensaje) as ConstraintLayout
+        val buscarTodos=findViewById<ConstraintLayout>(R.id.buscar_todos);
         principal.visibility = View.INVISIBLE
         mensajes.visibility = View.INVISIBLE
+        buscarTodos.visibility=View.INVISIBLE
 
     }
 
@@ -166,6 +175,9 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
+
+            Toast.makeText(applicationContext,
+                    "Registros "+mensajes.size,Toast.LENGTH_LONG).show();
         }
 
         override fun doInBackground(vararg p0: Void?): Void? {

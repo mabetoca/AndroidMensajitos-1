@@ -21,7 +21,8 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/contenido_principal" />
-   <include layout="@layout/guardar_mensaje"/>
+     <include layout="@layout/guardar_mensaje"/>
+    <include layout="@layout/buscar_todos"/>
 
 
 </android.support.design.widget.CoordinatorLayout>
